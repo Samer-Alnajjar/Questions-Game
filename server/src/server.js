@@ -8,7 +8,9 @@ const socketio = require("socket.io");
 const mongoose = require('mongoose');
 const cors = require("cors");
 require("dotenv").config();
-
+const notFoundHandler = require('../src/error-handlers/404.js');
+const errorHandler = require('../src/error-handlers/500.js');
+const v1Routes = require('../src/api-server/routes/v1.js');
 // Configuring packages
 
 const app = express();
@@ -26,11 +28,13 @@ app.use(express.static(publicDirectoryPath));
 
 
 // Routes
-
+app.set('view engine', 'ejs');
+app.use('/api/v1', v1Routes);
 
 // Handle errors
 
-
+app.use('*', notFoundHandler);
+app.use(errorHandler);
 
 
 // Listening to the Server
@@ -44,19 +48,19 @@ const options = {
 
 function start(PORT) {
   mongoose.connect(process.env.MONGODB_URI, options)
-  .then(() => {
-    // Start the web server
-    server.listen(PORT, () => console.log(`The Server is listening to PORT ${PORT}`));
-  })
-  .catch(error => {
-    console.log(`__CONNECTION ERROR__`, error.message);
-  })
+    .then(() => {
+      // Start the web server
+      server.listen(PORT, () => console.log(`The Server is listening to PORT ${PORT}`));
+    })
+    .catch(error => {
+      console.log(`__CONNECTION ERROR__`, error.message);
+    });
 }
 
 
 
 module.exports = {
-  server:server,
-  start:start,
-  PORT:PORT
-}
+  server: server,
+  start: start,
+  PORT: PORT
+};
