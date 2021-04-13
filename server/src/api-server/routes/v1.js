@@ -4,12 +4,10 @@ const express = require('express');
 const router = express.Router();
 const superAgent = require('superagent');
 
+const bearerAuth = require('../../auth-server/middleware/bearer.js')
+const permissions = require('../../auth-server/middleware/acl.js')
 
-
-
-
-
-router.get('/', handleQuestion);
+router.get('/', bearerAuth, permissions('create'), handleQuestion);
 
 
 

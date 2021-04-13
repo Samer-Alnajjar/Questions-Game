@@ -8,6 +8,7 @@ const socketio = require("socket.io");
 const mongoose = require('mongoose');
 const cors = require("cors");
 require("dotenv").config();
+const authRoutes = require('./auth-server/routes.js');
 const notFoundHandler = require('../src/error-handlers/404.js');
 const errorHandler = require('../src/error-handlers/500.js');
 const v1Routes = require('../src/api-server/routes/v1.js');
@@ -28,6 +29,7 @@ app.use(express.static(publicDirectoryPath));
 
 
 // Routes
+app.use(authRoutes);
 app.set('view engine', 'ejs');
 app.use('/api/v1', v1Routes);
 
