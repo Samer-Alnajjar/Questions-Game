@@ -16,17 +16,20 @@ const server = http.createServer(app);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 // Socket.io
 
 const io = socketio(server);
-const publicDirectoryPath = path.join(__dirname, "../public");
+
+const publicDirectoryPath = path.join(__dirname, "../../client");
 app.use(express.static(publicDirectoryPath));
 
 
 // Routes
-
+app.get("/", (req, res) => {
+  res.render("index.html");
+})
 
 // Handle errors
 
