@@ -24,6 +24,36 @@ const io = socketio(server);
 const publicDirectoryPath = path.join(__dirname, "../public");
 app.use(express.static(publicDirectoryPath));
 
+let players = [];
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html')
+});
+
+io.on('connection', (socket) => {
+
+  socket.on('user_joined', (name) => {
+    const player = {
+      id: socket.id,
+      // socket:socket,
+      name: name,
+      points: 0
+    };
+    players.push(player)
+    console.log(name, 'is now connected')
+    console.log(players);
+  });
+
+  socket.on('send_response', response => {
+    console.log(response);
+  });
+
+
+  socket.on('disconnect', () => {
+    players = [...players.filter(player => player.id !== socket.id)]
+    console.log(socket.id, 'user disconnected');
+  });
+});
 
 // Routes
 
@@ -44,19 +74,19 @@ const options = {
 
 function start(PORT) {
   mongoose.connect(process.env.MONGODB_URI, options)
-  .then(() => {
-    // Start the web server
-    server.listen(PORT, () => console.log(`The Server is listening to PORT ${PORT}`));
-  })
-  .catch(error => {
-    console.log(`__CONNECTION ERROR__`, error.message);
-  })
+    .then(() => {
+      // Start the web server
+      server.listen(PORT, () => console.log(`The Server is listening to PORT ${PORT}`));
+    })
+    .catch(error => {
+      console.log(`__CONNECTION ERROR__`, error.message);
+    })
 }
 
 
 
 module.exports = {
-  server:server,
-  start:start,
-  PORT:PORT
+  server: server,
+  start: start,
+  PORT: PORT
 }

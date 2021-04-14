@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Document</title>
+</head>
+
+<body class="bg-purple-200">
+    <!-- introoo -->
+    <div id="intro" class="container flex flex-col justify-center items-center m-auto h-screen">
+
+        <h1 class="text-3xl font-bold text-center">
+            Welcome to Quickly Guessing Game
+        </h1>
+
+        <form class="bg-white w-1/2 rounded p-6 shadow-md mt-6 text-center" id="form_user">
+            <h2 class="text-xl mb-4">
+                Enter your name to join
+
+            </h2>
+            <input id="name" class="d-block rounded w-full border border-grey-500 shadow-p4 ml" type="text"
+                placeholder="Enter your name ...">
+        </form>
+
+    </div>
+
+    <!-- game -->
+    <div id="game" class="hidden container flex flex-col justify-center items-center m-auto h-screen">
+
+        <form class="bg-white w-1/2 rounded p-6 shadow-md mt-6 text-center" id="submittion">
+            <h2 class="text-4xl mb-4" id="question">
+                what is the answer ???
+
+            </h2>
+            <input id="response" class="d-block rounded w-full border border-grey-500 shadow-p4 ml" type="text"
+                placeholder="Enter the solution ...">
+        </form>
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="./chat.js"></script>
+</body>
+
+</html>
