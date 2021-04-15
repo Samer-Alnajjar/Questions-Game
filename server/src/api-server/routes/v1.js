@@ -21,7 +21,6 @@ function handleQuestion(req,res) {
         // console.log(newData);
         res.render('game', { data: newData });
     });
-    
 }
 
 function Question(data) {
