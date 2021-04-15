@@ -49,7 +49,7 @@ app.use(errorHandler);
 let players = [];
 let questionsData = [];
 let userQuestions = [];
-let count = -1;
+// let count = 0;
 
 io.on('connection', (socket) => {
   console.log(`web socket`);
@@ -58,6 +58,7 @@ io.on('connection', (socket) => {
       id: socket.id,
       name: data.name,
       room: data.room,
+      count : 0,
       points: 0
     }
     players.push(player)
@@ -68,7 +69,7 @@ io.on('connection', (socket) => {
       // The redirect way
       // let destination = 'http://localhost:4000/game.html';
       // socket.emit('questionsData', destination, questionsData);
-      socket.emit('questionsData', generateQuestion(questionsData, count));
+      io.emit('questionsData', generateQuestion(questionsData));
       console.log(questionsData);
 
     }).catch(error => {
@@ -77,12 +78,12 @@ io.on('connection', (socket) => {
   })
 
   socket.on('send_response', response => {
-    console.log(response);
+    // console.log(response);
     let result = checkID(response.userAnswer, response.questionID);
 
     console.log(result);
 
-    if(result) {
+    if (result) {
       increasePoints(socket.id);
     }
     console.log(players);
@@ -90,7 +91,15 @@ io.on('connection', (socket) => {
     // !Hello from the other world
     // *We reached here
 
-    // socket.emit('questionsData', generateQuestion(questionsData, count));
+    // if (count == 9) {
+    //   count = 0;
+    // } else {
+    //   count++;
+    // }
+    // count++;
+    console.log(count);
+    io.emit('questionsData', generateQuestion(questionsData));
+    io.emit('questionsData', generateQuestion(questionsData));
 
   })
 
@@ -120,29 +129,61 @@ function handleQuestion() {
     });
 }
 
-function generateQuestion(questionsData, count) {
+function generateQuestion(questionsData) {
   for (let i = 0; i < questionsData.length; i++) {
-    userQuestions[i] = {id: questionsData[i].id, question:questionsData[i].question} ;
+    userQuestions[i] = { id: questionsData[i].id, question: questionsData[i].question };
   }
 
-  for (count; count < userQuestions.length; count++) {
-    count++;
-    return userQuestions[count];
-  }
+  // for (count; count < userQuestions.length; count++) {
+  //   count++;
+  //   if (count == 9) {
+  //     count = 0;
+  //     return 'finished Qusetion';
+  //   } else {
+  //     return userQuestions[count];
+  //   }
+
+
+  // }
+}
+
+function newQusetion(socket.id) {
+  // for (player.count; player.count < userQuestions.length; player.count++) {
+    player.count++;
+    if (player.count == 9) {
+      player.count = 0;
+      return 'finished Qusetion';
+    } else {
+      return userQuestions[player.count];
+    }
+  // }
+  console.log("passed id", id);
+  players = players.map(player => {
+    console.log("player id", player.id);
+    if (player.id === id) {
+      return {
+        ...player,
+        points: player.points + 2
+      }
+    } else {
+      return player;
+    }
+  })
 }
 
 function checkID(userAnswer, questionID) {
   let obj = questionsData.find(questionObj => questionID === questionObj.id);
-  if(userAnswer === obj.correct_answer) {
+  console.log(questionsData);
+  if (userAnswer === obj.correct_answer) {
     return true;
   }
   return false;
 }
 
 function increasePoints(id) {
-  console.log("passed id",id);
-  players = players.map (player => {
-    console.log("player id",player.id);
+  console.log("passed id", id);
+  players = players.map(player => {
+    console.log("player id", player.id);
     if (player.id === id) {
       return {
         ...player,
