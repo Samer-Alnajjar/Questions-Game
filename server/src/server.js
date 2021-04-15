@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
       id: socket.id,
       name: data.name,
       room: data.room,
-      count : 0,
+      count: -1,
       points: 0
     }
     players.push(player)
@@ -69,9 +69,10 @@ io.on('connection', (socket) => {
       // The redirect way
       // let destination = 'http://localhost:4000/game.html';
       // socket.emit('questionsData', destination, questionsData);
-      io.emit('questionsData', generateQuestion(questionsData));
-      console.log(questionsData);
-
+      storingUserQuestions(questionsData);
+      // console.log(userQuestions);
+      // console.log("generateQuestion", generateQuestion(socket.id));
+      io.emit('questionsData', generateQuestion(socket.id));
     }).catch(error => {
       console.log(`Error getting the data from API`, error.message);
     });
@@ -79,14 +80,15 @@ io.on('connection', (socket) => {
 
   socket.on('send_response', response => {
     // console.log(response);
+    console.log("from send_response", response);
     let result = checkID(response.userAnswer, response.questionID);
 
-    console.log(result);
+    console.log("**************************************************",result);
 
     if (result) {
       increasePoints(socket.id);
     }
-    console.log(players);
+    // console.log(players);
     // ******************************************************************
     // !Hello from the other world
     // *We reached here
@@ -97,9 +99,7 @@ io.on('connection', (socket) => {
     //   count++;
     // }
     // count++;
-    console.log(count);
-    io.emit('questionsData', generateQuestion(questionsData));
-    io.emit('questionsData', generateQuestion(questionsData));
+    io.emit('questionsData', generateQuestion(socket.id));
 
   })
 
@@ -129,52 +129,48 @@ function handleQuestion() {
     });
 }
 
-function generateQuestion(questionsData) {
+function storingUserQuestions(questionsData) {
   for (let i = 0; i < questionsData.length; i++) {
-    userQuestions[i] = { id: questionsData[i].id, question: questionsData[i].question };
+    // userQuestions[i] = { id: questionsData[i].id, question: questionsData[i].question };
+    userQuestions.push({ id: questionsData[i].id, question: questionsData[i].question, answer: questionsData[i].correct_answer });
   }
-
-  // for (count; count < userQuestions.length; count++) {
-  //   count++;
-  //   if (count == 9) {
-  //     count = 0;
-  //     return 'finished Qusetion';
-  //   } else {
-  //     return userQuestions[count];
-  //   }
-
-
-  // }
+  console.log("**********************************",userQuestions.length);
 }
 
-function newQusetion(socket.id) {
-  // for (player.count; player.count < userQuestions.length; player.count++) {
-    player.count++;
-    if (player.count == 9) {
-      player.count = 0;
-      return 'finished Qusetion';
-    } else {
-      return userQuestions[player.count];
-    }
-  // }
-  console.log("passed id", id);
+function generateQuestion(id) {
+  console.log("From inside the generateQuestion for id" + id);
   players = players.map(player => {
-    console.log("player id", player.id);
-    if (player.id === id) {
-      return {
-        ...player,
-        points: player.points + 2
+    // console.log("player id", player.id);
+    // console.log("socket id", id);
+    // if (player.id === id) {
+        return {
+          ...player,
+          count: player.count + 1
+        }
+      // } else {
+        // return player
+      // }
+    })
+console.log(players);
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].id === id) {
+      if (players[i].count === 9) {
+        return 'Questions are finished';
+      } else {
+        return userQuestions[Math.floor(Math.random() * ((userQuestions.length-1) - 1))];
       }
-    } else {
-      return player;
     }
-  })
+  }
 }
 
 function checkID(userAnswer, questionID) {
-  let obj = questionsData.find(questionObj => questionID === questionObj.id);
-  console.log(questionsData);
-  if (userAnswer === obj.correct_answer) {
+
+  // console.log("userAnswer", userAnswer, "questionID", questionID);
+  let obj = userQuestions.find(questionObj => questionID === questionObj.id);
+  // console.log("***************obj", obj);
+  // console.log("***************userAnswer", userAnswer);
+  // console.log("***************obj.correct_answer",obj.answer);
+  if (userAnswer == obj.answer) {
     return true;
   }
   return false;
