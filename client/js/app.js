@@ -25,7 +25,12 @@ userForm.addEventListener('submit', (e) => {
     game.classList.remove("hidden");
 
     socket.on("questionsData",generateQuestion => {
+      console.log(generateQuestion);
       // arrayOfQuestions = generateQuestion.map(question => question)
+      // console.log(generateQuestion);
+      if (typeof generateQuestion === "string") {
+        alert(generateQuestion)
+      }
       userQuestion = generateQuestion;
       question.textContent = generateQuestion.question;
     })
@@ -48,7 +53,7 @@ submission.addEventListener('click',e=>{
   if(res === "True" || res === "False"){
     // let socket = window.io();
     socket.emit('send_response',{userAnswer: res, questionID: userQuestion.id});
-
+    
   }
 })
 
