@@ -7,7 +7,7 @@ const game = document.getElementById('game')
 const submission = document.getElementById('submittion');
 const question = document.querySelector("#question");
 let userQuestion;
-
+let board = document.getElementById('leaderboard')
 
 // For Form
 
@@ -18,42 +18,50 @@ userForm.addEventListener('submit', (e) => {
   const name = e.target['name'].value;
   const room = e.target['room'].value;
   // if (name) {
-    // let socket = window.io();
-    socket.emit('user_joined', { name: name, room: room })
+  // let socket = window.io();
+  socket.emit('user_joined', { name: name, room: room })
 
-    intro.classList.add("hidden");
-    game.classList.remove("hidden");
+  intro.classList.add("hidden");
+  game.classList.remove("hidden");
 
-    socket.on("questionsData",generateQuestion => {
-      console.log(generateQuestion);
-      // arrayOfQuestions = generateQuestion.map(question => question)
-      // console.log(generateQuestion);
-      if (typeof generateQuestion === "string") {
-        alert(generateQuestion)
-      }
-      userQuestion = generateQuestion;
-      question.textContent = generateQuestion.question;
-    })
-    // socket.on('redirect', (destination, questionsData) => {
-    //   window.location.href = destination;
-      //   console.log(`From app ${questionsData}`);
-      //   socket.emit("questionsData", questionsData);
-    // });
+  socket.on("questionsData", generateQuestion => {
+    console.log(generateQuestion);
+    // arrayOfQuestions = generateQuestion.map(question => question)
+    // console.log(generateQuestion);
+    if (typeof generateQuestion === "string") {
+      alert(generateQuestion)
+    }
+    userQuestion = generateQuestion;
+    question.textContent = generateQuestion.question;
+  })
+  socket.on('leaderBoard', (leaderBoard) => {
+    console.log('xxxxxxxxxxxxxxxxxxxxxleaderboardxxxxxxxxxxxxxxxxxxxxxxxxxx', leaderBoard)
+    // let name = document.createElement('li')
+    // name.textContent=leaderBoard.name
+    // board.append(board)
+    board.innerHTML = `${leaderBoard.map(player => `<li><strong>${player.name}</strong>${player.points}</li>`
+    )}`
+  })
+  // socket.on('redirect', (destination, questionsData) => {
+  //   window.location.href = destination;
+  //   console.log(`From app ${questionsData}`);
+  //   socket.emit("questionsData", questionsData);
+  // });
   // }
 })
 
 // For Game
 
 
-submission.addEventListener('click',e=>{
-  
+submission.addEventListener('click', e => {
+
   e.preventDefault();
-  const res = e.target.innerText ;
-  
-  if(res === "True" || res === "False"){
+  const res = e.target.innerText;
+
+  if (res === "True" || res === "False") {
     // let socket = window.io();
-    socket.emit('send_response',{userAnswer: res, questionID: userQuestion.id});
-    
+    socket.emit('send_response', { userAnswer: res, questionID: userQuestion.id });
+
   }
 })
 
@@ -63,7 +71,7 @@ submission.addEventListener('click',e=>{
 //     submission.addEventListener('click',e=>{
 //       e.preventDefault();
 //       const res = e.target.innerText ;
-      
+
 //       if(res === "True" || res === "False"){
 //         let socket = window.io();
 //         socket.emit('send_response',res);
