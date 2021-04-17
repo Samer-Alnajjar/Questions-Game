@@ -73,6 +73,7 @@ io.on('connection', (socket) => {
       // console.log(userQuestions);
       // console.log("generateQuestion", generateQuestion(socket.id));
       io.emit('questionsData', generateQuestion(socket.id));
+      userPoints();
     }).catch(error => {
       console.log(`Error getting the data from API`, error.message);
     });
@@ -99,7 +100,9 @@ io.on('connection', (socket) => {
     //   count++;
     // }
     // count++;
+    
     io.emit('questionsData', generateQuestion(socket.id));
+    userPoints();
 
   })
 
@@ -154,7 +157,7 @@ function generateQuestion(id) {
 console.log(players);
   for (let i = 0; i < players.length; i++) {
     if (players[i].id === id) {
-      if (players[i].count === 9) {
+      if (players[i].count === 19) {
         return 'Questions are finished';
       } else {
         return userQuestions[Math.floor(Math.random() * ((userQuestions.length-1) - 1))];
@@ -191,7 +194,11 @@ function increasePoints(id) {
   })
 }
 
-
+function userPoints (){
+  const leaderBoard = players.map(player=> players.sort((a,b)=>b.points-a.points).slice(0,10));
+  io.emit('leaderBoard',leaderBoard[leaderBoard.length-1]);
+  console.log('xxxxxxxxxxxxxxxxxxxxxleaderboardxxxxxxxxxxxxxxxxxxxxxxxxxx',leaderBoard);
+}
 
 function Question(data) {
   this.id = uuidv4();
