@@ -19,7 +19,14 @@ userForm.addEventListener('submit', (e) => {
   const room = e.target['room'].value;
   // if (name) {
   // let socket = window.io();
-  socket.emit('user_joined', { name: name, room: room })
+  socket.emit('user_joined', { name: name, room: room });
+  socket.on('welcome',(player) => {
+    alert(`${player.name} joined the game !`);
+  });
+  
+  socket.on('leave', player => {
+    alert(`${player} left the game !`);
+  })
 
   intro.style.display='none';
   game.classList.remove("hidden");
