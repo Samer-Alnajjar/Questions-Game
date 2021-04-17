@@ -49,7 +49,6 @@ app.use(errorHandler);
 let players = [];
 let questionsData = [];
 let userQuestions = [];
-// let count = 0;
 
 io.on('connection', (socket) => {
   console.log(`web socket`);
@@ -61,6 +60,7 @@ io.on('connection', (socket) => {
       count: -1,
       points: 0
     }
+    socket.broadcast.emit('welcome', player)
     players.push(player)
     console.log(data.name, 'is now connected')
     console.log(players);
@@ -111,6 +111,7 @@ io.on('connection', (socket) => {
       if (player.id !== socket.id) {
         return player.id !== socket.id;
       } else {
+        io.emit('leave', player.name);
         console.log(player.name, 'user disconnected');
       }
     })
