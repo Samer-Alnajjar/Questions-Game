@@ -56,12 +56,28 @@
 
 
   <div id="game" class="hidden container flex flex-col justify-center items-center m-auto h-screen">
+    <!-- leaderBoard -->
+    <div class="bg-white w-1/3 rounded p-6 shadow-md  text-center">
+      <h3>leader Board</h3>
+      <hr>
+      <div>
+        <ul id="leaderboard">
+          <li class="flex justify-between">
+            <strong>Name:</strong>
+            10
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <h2 class="text-4xl mb-4" id="question">
     </h2>
     <form class="bg-white w-1/2 rounded p-6 shadow-md mt-6 text-center" id="submittion">
-      
-      <button id="response_true" class="d-block rounded w-full border border-grey-500 shadow-p4 ml" type="submit">True</button>
-      <button id="response_false" class="d-block rounded w-full border border-grey-500 shadow-p4 ml" type="submit">False</button>
+
+      <button id="response_true" class="d-block rounded w-full border border-grey-500 shadow-p4 ml"
+        type="submit">True</button>
+      <button id="response_false" class="d-block rounded w-full border border-grey-500 shadow-p4 ml"
+        type="submit">False</button>
     </form>
   </div>
 
