@@ -125,6 +125,8 @@ header{
     margin-bottom: 1%;
 }
 #leader{
+    height: 100%;
+    
     box-shadow: #084944 0px 5px 15px;
     background:#f8ecc9;
     width:70%;
@@ -139,13 +141,7 @@ header{
 hr{
     height:10px;
     color:black;
-    
-
 }
-ul{
-    /* display: flex; */
-}
-
 li{
     font-family: 'Fredoka One', cursive;
     display: flex;
