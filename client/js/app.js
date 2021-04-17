@@ -21,7 +21,7 @@ userForm.addEventListener('submit', (e) => {
   // let socket = window.io();
   socket.emit('user_joined', { name: name, room: room })
 
-  intro.classList.add("hidden");
+  intro.style.display='none';
   game.classList.remove("hidden");
 
   socket.on("questionsData", generateQuestion => {

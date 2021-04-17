@@ -1,7 +1,154 @@
+/* font-family: 'Fredoka One', cursive; */
+body{
+    height: 100%;
+    width:100% ;
+
+    background:#f9c527;
+}
+.bodyimg{
+    margin-top:5%;
+ z-index: -10;
+ position: absolute;
+}
+header{
+    height:25%;
+    background-color: #084944;
+}
+#intro{
+    display: grid;
+    grid-template-rows: 2fr 3fr;
+    justify-items: center;
+    align-items: center;
+    
+    width:100%;
+    margin: auto;
+    margin-top:2%;
+}
+#ruless{
+    width:50%;
+    display:grid;
+    grid-template-rows: 1fr 2fr;
+    justify-items: center;
+    align-items: center;
+}
+#gamerule{
+ color:#ad5113;
+  font-size: 30px; 
+  margin-bottom:5px;
+  font-family: 'Fredoka One', cursive;
+ 
+}
+#ruleBox{
+    box-sizing: border-box;
+    border: 6px solid #ad5113;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+#ruleBox p {
+    font-family:'Fredoka One', cursive;
+    font-size: 100%;
+    color:#ad5113;
+}
+#form_user{
+    width:50%;
+    display:grid;
+    grid-template-rows: repeat(4,1fr);
+    justify-items: center;
+    align-items: center;
+    margin-top:5%;
+    background:#084944;
+    border:1px solid #f9c527;
+  border-radius:5px;
+  padding:2%;
+  height:100%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+#form_user h2{
+    
+    color:#f9c527;
+    font-family: 'Fredoka One', cursive;
+    font-size: 20px;
+    margin-bottom: 1%;
+}
+#btn{
+    background:#f9c527;
+    width:15%;
+    /* height:100%; */
+    color: #084944;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border:1px solid #f9c527;
+    border-radius:rounded;
+}
+#btn:hover{
+ width:20%;
+ padding:5px;
+ /* font-size: 20px; */
+ font-weight: bold;
+}
+#game{
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    justify-items: center;
+    align-items: center;
+    
+    width:100%;
+    margin: auto;
+    margin-top:2%;
+}
+.hidden{
+    visibility: hidden;
+}
+#q{
+    margin-left: 50%;
+    width:100%
+}
+#submittion{
+    width:70%;
+    display:grid;
+    grid-template-rows: repeat(2,2fr);
+    justify-items: center;
+    align-items: center;
+    margin-top:5%;
+    background:#084944;
+    border:1px solid #f9c527;
+  border-radius:5px;
+  padding:2%;
+  height:100%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+#submittion h2{
+    color:#f9c527;
+    font-family: 'Fredoka One', cursive;
+    font-size: 20px;
+    margin-bottom: 1%;
+}
+#leader{
+    box-shadow: #084944 0px 5px 15px;
+    background:#f8ecc9;
+    width:70%;
+}
+#leader h3{
+    color:#084944;
+    font-family: 'Fredoka One', cursive;
+    font-size: 20px;
+    margin-bottom: 1%;
+     text-align: center;
+}
+hr{
+    height:10px;
+    color:black;
+    
+
+}
 ul{
     /* display: flex; */
 }
+
 li{
+    font-family: 'Fredoka One', cursive;
     display: flex;
     justify-content: space-between;
+    color:#084944;
 }
