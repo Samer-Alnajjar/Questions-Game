@@ -62,8 +62,8 @@ io.on('connection', (socket) => {
     }
     socket.broadcast.emit('welcome', player)
     players.push(player)
-    console.log(data.name, 'is now connected')
-    console.log(players);
+    // console.log(data.name, 'is now connected')
+    // console.log(players);
     handleQuestion().then(() => {
       // console.log("After promise", questionsData);
       // The redirect way
@@ -81,10 +81,10 @@ io.on('connection', (socket) => {
 
   socket.on('send_response', response => {
     // console.log(response);
-    console.log("from send_response", response);
+    // console.log("from send_response", response);
     let result = checkID(response.userAnswer, response.questionID);
 
-    console.log("**************************************************",result);
+    // console.log("**************************************************",result);
 
     if (result) {
       increasePoints(socket.id);
@@ -138,11 +138,11 @@ function storingUserQuestions(questionsData) {
     // userQuestions[i] = { id: questionsData[i].id, question: questionsData[i].question };
     userQuestions.push({ id: questionsData[i].id, question: questionsData[i].question, answer: questionsData[i].correct_answer });
   }
-  console.log("**********************************",userQuestions.length);
+  // console.log("**********************************",userQuestions.length);
 }
 
 function generateQuestion(id) {
-  console.log("From inside the generateQuestion for id" + id);
+  // console.log("From inside the generateQuestion for id" + id);
   players = players.map(player => {
     // console.log("player id", player.id);
     // console.log("socket id", id);
@@ -155,16 +155,28 @@ function generateQuestion(id) {
         // return player
       // }
     })
-console.log(players);
+// console.log(players);
   for (let i = 0; i < players.length; i++) {
     if (players[i].id === id) {
       if (players[i].count === 19) {
-        return 'Questions are finished';
+        // console.log(checkWinner());
+        return {statement:'Questions are finished', winner: checkWinner()};
       } else {
         return userQuestions[Math.floor(Math.random() * ((userQuestions.length-1) - 1))];
       }
     }
   }
+}
+
+function checkWinner() {
+  let winner = players[0];
+  for (let i = 1; i < players.length; i++) {
+    if(winner.points < players[i].points) {
+      winner = players[i];
+    }
+  }
+  // console.log(winner);
+  return winner;
 }
 
 function checkID(userAnswer, questionID) {
@@ -181,9 +193,9 @@ function checkID(userAnswer, questionID) {
 }
 
 function increasePoints(id) {
-  console.log("passed id", id);
+  // console.log("passed id", id);
   players = players.map(player => {
-    console.log("player id", player.id);
+    // console.log("player id", player.id);
     if (player.id === id) {
       return {
         ...player,
@@ -198,7 +210,7 @@ function increasePoints(id) {
 function userPoints (){
   const leaderBoard = players.map(player=> players.sort((a,b)=>b.points-a.points).slice(0,10));
   io.emit('leaderBoard',leaderBoard[leaderBoard.length-1]);
-  console.log('xxxxxxxxxxxxxxxxxxxxxleaderboardxxxxxxxxxxxxxxxxxxxxxxxxxx',leaderBoard);
+  // console.log('xxxxxxxxxxxxxxxxxxxxxleaderboardxxxxxxxxxxxxxxxxxxxxxxxxxx',leaderBoard);
 }
 
 function Question(data) {

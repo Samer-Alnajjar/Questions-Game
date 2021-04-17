@@ -35,8 +35,9 @@ userForm.addEventListener('submit', (e) => {
     console.log(generateQuestion);
     // arrayOfQuestions = generateQuestion.map(question => question)
     // console.log(generateQuestion);
-    if (typeof generateQuestion === "string") {
-      alert(generateQuestion)
+    if (typeof generateQuestion.statement === "string") {
+      alert(generateQuestion.statement);
+      alert(generateQuestion.winner.name + " won the game !");
     }
     userQuestion = generateQuestion;
     question.textContent = generateQuestion.question;
