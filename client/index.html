@@ -26,59 +26,75 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
 
   <title>Document</title>
 </head>
 
-<body class="bg-purple-200">
-  <div id="intro" class="container flex flex-col justify-center items-center m-auto h-screen">
+<body>
+  <img  class ="bodyimg" src="./assets/body.png" alt="" srcset="">
+  <header>
+    <img src="./assets/header.png" alt="">
+  </header>
+  <div id="intro" class="container">
+    <div id="ruless">
+      <h2 id="gamerule">
+        Game Rule
+      </h2>
+      <div id="ruleBox">
+        <p >
+          This is a multi players true false game:
+every round has 20 questions , the first one who is answering correct he/she will get 2 points
+        </p>
+      </div>
+    </div>
 
-    <h1 class="text-3xl font-bold text-center">
-      Welcome to Quickly Guessing Game
-    </h1>
-
-    <form class="bg-white w-1/2 rounded p-6 shadow-md mt-6 text-center" id="form_user">
-      <h2 class="text-xl mb-4">
-        Enter your name to join
+    <form  id="form_user">
+      <h2>
+        Welcome to our game 
+Please inter your name to join ^_^
 
       </h2>
       <input id="name" class="d-block rounded w-full border border-grey-500 shadow-p4 ml" type="text"
         placeholder="Enter your name ..." required>
 
-      <label>Room</label>
+      <!-- <label>Room</label> -->
       <input id="room" class="d-block rounded w-full border border-grey-500 shadow-p4 ml" type="text"
         placeholder="Enter the room number" required>
-      <button type="submit" class="border border-grey-500 bg-gray">Join</button>
+      <button type="submit" class="" id = "btn">Join</button>
     </form>
 
   </div>
 
 
-  <div id="game" class="hidden container flex flex-col justify-center items-center m-auto h-screen">
+  <div id="game" class="hidden">
+    
+    <div id="q">
+      <form id="submittion">
+        <h2 id="question">
+        </h2>
+        
+        <button style="background-color:#f8ecc9;" id="response_true" class="d-block rounded w-full border border-grey-500 shadow-p4 ml"
+        type="submit">True</button>
+        <button style="background-color:#f8ecc9;" id="response_false" class="d-block rounded w-full border border-grey-500 shadow-p4 ml"
+        type="submit">False</button>
+      </form>
+    </div>
     <!-- leaderBoard -->
-    <div class="bg-white w-1/3 rounded p-6 shadow-md  text-center">
-      <h3>leader Board</h3>
+    <div id ="leader" class="rounded p-6">
+      <h3>Leader Board</h3>
       <hr>
       <div>
         <ul id="leaderboard">
-          <li class="flex justify-between">
+          <li >
             <strong>Name:</strong>
             10
           </li>
         </ul>
       </div>
     </div>
-
-    <h2 class="text-4xl mb-4" id="question">
-    </h2>
-    <form class="bg-white w-1/2 rounded p-6 shadow-md mt-6 text-center" id="submittion">
-
-      <button id="response_true" class="d-block rounded w-full border border-grey-500 shadow-p4 ml"
-        type="submit">True</button>
-      <button id="response_false" class="d-block rounded w-full border border-grey-500 shadow-p4 ml"
-        type="submit">False</button>
-    </form>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
