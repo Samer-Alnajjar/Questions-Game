@@ -11,9 +11,9 @@ const { v4: uuidv4 } = require('uuid');
 const cors = require("cors");
 require("dotenv").config();
 const authRoutes = require('./auth-server/routes.js');
-const notFoundHandler = require('../src/error-handlers/404.js');
-const errorHandler = require('../src/error-handlers/500.js');
-const v1Routes = require('../src/api-server/routes/v1.js');
+const notFoundHandler = require('./error-handlers/404.js');
+const errorHandler = require('./error-handlers/500.js');
+const v1Routes = require('./api-server/routes/v1.js');
 // Configuring packages
 
 const app = express();
@@ -27,7 +27,7 @@ const PORT = process.env.PORT || 4000;
 
 const io = socketio(server);
 
-const publicDirectoryPath = path.join(__dirname, "../../client");
+const publicDirectoryPath = path.join(__dirname, "../client");
 app.use(express.static(publicDirectoryPath));
 
 
